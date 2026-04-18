@@ -526,9 +526,8 @@ export default function App() {
       const raw = await callClaude(`Recherche trouvia.ch: "${active.query}". Annonces:\n${JSON.stringify(filtered.map(a => ({ id: a.id, titre: a.titre, desc: a.desc, prix: a.prix, cat: a.cat, lieu: a.lieu })))}\nJSON: {"ids":[...],"message":"phrase courte max 12 mots"}`, 200);
       const parsed = JSON.parse(raw);
       const sorted = parsed.ids.map(id => filtered.find(a => a.id === id)).filter(Boolean);
-      const rest = filtered.filter(a => !parsed.ids.includes(a.id));
-      const tops = [...sorted, ...rest].filter(a => a.top);
-      const normal = [...sorted, ...rest].filter(a => !a.top);
+const tops = sorted.filter(a => a.top);
+const normal = sorted.filter(a => !a.top);
       upd(active.id, { displayed: [...tops, ...normal], aiResult: { ids: parsed.ids }, aiMsg: parsed.message || "", loading: false });
     } catch { upd(active.id, { displayed: filtered, aiMsg: "Recherche effectuée.", loading: false }); }
   };
