@@ -74,7 +74,7 @@ function dealScore(a) {
   return { label: "Excellente affaire !", emoji: "🔥", color: "#D97706", bg: "#FFFBEB", stars: 5, score: 3 };
 }
 
-aasync function callClaude(prompt: string, maxTokens = 400) {
+async function callClaude(prompt: string, maxTokens = 400) {
   const res = await fetch("/api/claude", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
