@@ -74,13 +74,14 @@ function dealScore(a) {
   return { label: "Excellente affaire !", emoji: "🔥", color: "#D97706", bg: "#FFFBEB", stars: 5, score: 3 };
 }
 
-async function callClaude(prompt, maxTokens = 400) {
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: maxTokens, messages: [{ role: "user", content: prompt }] })
+aasync function callClaude(prompt: string, maxTokens = 400) {
+  const res = await fetch("/api/claude", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt, maxTokens }),
   });
   const data = await res.json();
-  return data.content.map(i => i.text || "").join("").replace(/```json|```/g, "").trim();
+  return data.content.map((i: any) => i.text || "").join("").replace(/```json|```/g, "").trim();
 }
 
 // ─── DIAMOND ──────────────────────────────────────────────────────────────────
